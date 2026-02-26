@@ -9,7 +9,7 @@ IMG_SIZE = 96
 BATCH_SIZE = 32
 EPOCHS = 10
 
-# Data generators
+
 datagen = ImageDataGenerator(
     rescale=1./255,
     validation_split=0.2
@@ -33,11 +33,11 @@ val_gen = datagen.flow_from_directory(
     subset="validation"
 )
 
-# Convert grayscale → RGB for MobileNetV2
+
 def gray_to_rgb(x):
     return tf.image.grayscale_to_rgb(x)
 
-# Load base model
+
 base_model = MobileNetV2(
     weights="imagenet",
     include_top=False,
@@ -46,7 +46,7 @@ base_model = MobileNetV2(
 
 base_model.trainable = False
 
-# Build model
+
 inputs = tf.keras.Input(shape=(IMG_SIZE, IMG_SIZE, 1))
 x = gray_to_rgb(inputs)
 x = base_model(x)
@@ -62,13 +62,13 @@ model.compile(
     metrics=["accuracy"]
 )
 
-# Train
+
 history = model.fit(
     train_gen,
     validation_data=val_gen,
     epochs=EPOCHS
 )
 
-# Save model
+
 model.save("action_violence_model.h5")
 print("Model saved as action_violence_model.h5")

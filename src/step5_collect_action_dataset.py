@@ -4,7 +4,7 @@ import requests
 import time
 import os
 
-ESP32_CAM_URL = "http://192.168.0.137/capture"  # your ESP32 IP
+ESP32_CAM_URL = "http://192.168.0.137/capture"  
 
 SAVE_VIOLENT = "dataset/violent"
 SAVE_NON_VIOLENT = "dataset/non_violent"

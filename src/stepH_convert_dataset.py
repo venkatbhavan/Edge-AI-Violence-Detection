@@ -8,8 +8,8 @@ VIDEO_FOLDERS = {
     "Non_Violence": "Non_Violence_image"
 }
 
-FRAME_SKIP = 10          # take 1 frame every 10 frames
-IMG_SIZE = (96, 96)      # for Edge Impulse / ESP32
+FRAME_SKIP = 10          
+IMG_SIZE = (96, 96)      
 
 
 def extract_rgb_frames(input_dir, output_dir):
@@ -30,7 +30,7 @@ def extract_rgb_frames(input_dir, output_dir):
             if not ret:
                 break
 
-            # IMPORTANT: frame is COLOR (BGR)
+            
             if frame_count % FRAME_SKIP == 0:
                 frame_resized = cv2.resize(frame, IMG_SIZE)
                 img_name = f"{os.path.splitext(video_file)[0]}_{img_id}.jpg"
@@ -44,7 +44,7 @@ def extract_rgb_frames(input_dir, output_dir):
     print(f"[DONE] Processed videos from: {input_dir}")
 
 
-# Run for both classes
+
 for video_folder, image_folder in VIDEO_FOLDERS.items():
     extract_rgb_frames(
         os.path.join(BASE_PATH, video_folder),

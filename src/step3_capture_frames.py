@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import requests
 
-# 🔴 CHANGE THIS TO YOUR ESP32-CAM IP
 ESP32_CAM_URL = "http://192.168.0.137/capture"
 
 while True:

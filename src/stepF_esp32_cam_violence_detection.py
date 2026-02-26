@@ -4,41 +4,34 @@ import requests
 import time
 from tensorflow.keras.models import load_model
 
-# ===============================
-# CONFIG
-# ===============================
-ESP32_CAM_URL = "http://192.168.0.137/capture"   # 🔴 CHANGE if ESP32 IP changes
+
+ESP32_CAM_URL = "http://192.168.0.137/capture"   
 MODEL_PATH = "action_violence_model.h5"
 
 IMG_SIZE = 96
-THRESHOLD = 0.45            # slightly sensitive for ESP32
-DISPLAY_SCALE = 2.5         # enlarge ESP32 video
+THRESHOLD = 0.45           
+DISPLAY_SCALE = 2.5         
 
-# ===============================
-# LOAD MODEL
-# ===============================
+
 print("[INFO] Loading model...")
 model = load_model(MODEL_PATH)
 print("[INFO] Model loaded successfully")
 
-# ===============================
-# PREPROCESS FUNCTION
-# ===============================
+
+
 def preprocess(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray = cv2.resize(gray, (IMG_SIZE, IMG_SIZE))
     gray = gray.astype("float32") / 255.0
-    gray = np.expand_dims(gray, axis=-1)     # (96,96,1)
-    return np.expand_dims(gray, axis=0)      # (1,96,96,1)
+    gray = np.expand_dims(gray, axis=-1)    
+    return np.expand_dims(gray, axis=0)      
 
-# ===============================
-# MAIN LOOP
-# ===============================
+
 print("[INFO] Starting ESP32-CAM live detection...")
 
 while True:
     try:
-        # Fetch frame (ESP32 needs more time)
+        
         response = requests.get(
             ESP32_CAM_URL,
             timeout=12
@@ -57,7 +50,7 @@ while True:
             time.sleep(0.5)
             continue
 
-        # Inference
+        
         input_frame = preprocess(frame)
         pred = model.predict(input_frame, verbose=0)[0][0]
 
@@ -68,7 +61,7 @@ while True:
             label = f"NON-VIOLENCE ({1 - pred:.2f})"
             color = (0, 255, 0)
 
-        # Display (resize only for viewing)
+        
         display = cv2.resize(
             frame,
             None,
@@ -89,7 +82,7 @@ while True:
 
         cv2.imshow("ESP32-CAM Violence Detection", display)
 
-        # VERY IMPORTANT: slow loop for ESP32
+        
         time.sleep(0.3)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):

@@ -13,7 +13,7 @@ model = tf.keras.models.load_model(MODEL_PATH)
 print("[INFO] Model loaded")
 
 prev_gray = None
-history = deque(maxlen=3)   # 🔑 ONLY CHANGE
+history = deque(maxlen=3)   
 
 HTML_PAGE = """
 <!DOCTYPE html>
@@ -184,7 +184,7 @@ def predict():
 
     history.append(class_id)
 
-    # 🔑 CONSERVATIVE DECISION
+    
     if list(history) == [1, 1, 1]:
         label = "VIOLENCE"
     else:

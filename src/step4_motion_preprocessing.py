@@ -3,7 +3,7 @@ import numpy as np
 import requests
 import time
 
-ESP32_CAM_URL = "http://192.168.0.137/capture"  # your IP
+ESP32_CAM_URL = "http://192.168.0.137/capture"  
 
 prev_gray = None
 
@@ -30,7 +30,7 @@ while True:
         cv2.imshow("Original Frame", frame)
         cv2.imshow("Motion Image", motion)
 
-        time.sleep(0.3)  # 🔑 THIS IS THE KEY FIX
+        time.sleep(0.3)  
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

@@ -7,7 +7,7 @@ INPUT_DIR = r"D:\esp32_cam_project\Real Life Violence Dataset"
 OUTPUT_DIR = r"D:\esp32_cam_project\processed_dataset"
 
 IMG_SIZE = 96
-FRAME_SKIP = 5   # take one motion sample every 5 frames
+FRAME_SKIP = 5   
 
 os.makedirs(f"{OUTPUT_DIR}/Violence", exist_ok=True)
 os.makedirs(f"{OUTPUT_DIR}/Non_Violence", exist_ok=True)

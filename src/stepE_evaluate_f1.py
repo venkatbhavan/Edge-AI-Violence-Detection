@@ -6,24 +6,19 @@ from sklearn.metrics import classification_report, f1_score, confusion_matrix
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
 
-# ==============================
-# CONFIG
-# ==============================
+
 MODEL_PATH = "action_violence_model.h5"
 IMG_SIZE = 96
 BATCH_SIZE = 32
 DATA_DIR = "processed_dataset"
 
-# ==============================
-# LOAD MODEL
-# ==============================
+
 print("[INFO] Loading model...")
 model = tf.keras.models.load_model(MODEL_PATH)
 print("[INFO] Model loaded successfully")
 
-# ==============================
-# LOAD DATA
-# ==============================
+
+
 datagen = ImageDataGenerator(rescale=1./255)
 
 data_gen = datagen.flow_from_directory(
@@ -35,9 +30,7 @@ data_gen = datagen.flow_from_directory(
     shuffle=False
 )
 
-# ==============================
-# PREDICT
-# ==============================
+
 print("[INFO] Running evaluation...")
 preds = model.predict(data_gen, verbose=1)
 
@@ -46,9 +39,7 @@ y_true = data_gen.classes
 
 class_labels = list(data_gen.class_indices.keys())
 
-# ==============================
-# CLASSIFICATION REPORT
-# ==============================
+
 report = classification_report(
     y_true,
     y_pred,
@@ -60,19 +51,15 @@ print("Classification Report:")
 print("==============================")
 print(report)
 
-# Save classification report
+
 with open("classification_report.txt", "w") as f:
     f.write(report)
 
-# ==============================
-# WEIGHTED F1 SCORE
-# ==============================
+
 f1 = f1_score(y_true, y_pred, average="weighted")
 print(f"\nWeighted F1 Score: {f1:.4f}")
 
-# ==============================
-# CONFUSION MATRIX
-# ==============================
+
 cm = confusion_matrix(y_true, y_pred)
 
 plt.figure(figsize=(6, 5))
